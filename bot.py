@@ -37,15 +37,25 @@ class BotStreamer(tweepy.StreamListener):
         print(status.text)
         atstring=botname+" "
         usertext=status.text.replace(atstring,"") 
-        tweetout=c.tweeted_at(status.user.screen_name,usertext)
-        twtstring="@"+status.user.screen_name+" helo!"
-        panic_tweet(tweetout)
+        try: 
+            tweetout=c.tweeted_at(status.user.screen_name,usertext)
+            panic_tweet(tweetout)
+        except tweepy.TweepError as error:
+            if error.api_code == 187:
+        # Do something special
+                print('duplicate message')
+            else:
+                raise error
 
     def on_error(self, status_code):
         if status_code == 420:
             #returning False in on_error disconnects the stream
             panic_tweet("wups, mae bot yn wedi crashio achos error 420") 
             return False
+        if status_code == 187:
+            print("duplicate")
+            panic_tweet("Da Iawn, all good, nothing to see here")
+            return True
 
 
 myStreamListener = BotStreamer()
@@ -53,5 +63,5 @@ myStreamListener = BotStreamer()
  #Construct the Stream instance
 stream = tweepy.Stream(auth, myStreamListener)
 
-stream.filter(track=[botname])
+stream.filter(track=[botname] )
 
