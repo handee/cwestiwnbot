@@ -57,7 +57,7 @@ class cwestiwn(object):
             congrats=random.choice(self.welldone)
             tweet="@"+user+" "+congrats
         else :
-            tweet="@"+user+" na sori, yr ateb ywr "
+            tweet="@"+user+" na sori, yr ateb yw "
             for i in range(0,len(a[1])-1):
                 tweet+=a[1][i]
                 tweet+=", "
