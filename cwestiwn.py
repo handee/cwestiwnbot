@@ -62,7 +62,7 @@ class cwestiwn(object):
                 tweet+=a[1][i]
                 tweet+=", "
                 tweet+="neu "
-                tweet+=a[1][-1]
+            tweet+=a[1][-1]
         return(tweet)
 
      def test_q_dataset(self):
